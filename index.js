@@ -18,7 +18,7 @@ var davidShieldIcon = L.icon({
 })
 
 // Generate endless amount of markers
-var i=0, markers = {};
+var i=0, markers = {}, popups = {};
 var markerTimer = setInterval(function () {
 	if (i > visitors.length)
 		i = 0;
@@ -28,14 +28,22 @@ var markerTimer = setInterval(function () {
 },  200);
 
 function generateMarker(visitor) {
+	// if the marker is already there, just make it brightest
     if (markers[visitor.ip]) {
         markers[visitor.ip].setOpacity(1);
+		popups[visitor.ip].setContent(visitor.city+': '+visitor.request);
         return;
     }
+
     var marker = L.marker([visitor.latitude, visitor.longitude], {icon: davidShieldIcon}).addTo(map);
+	var popup = L.popup({closeButton: false});
+	popup.setContent(visitor.city+': '+visitor.request);
+	marker.bindPopup(popup).openPopup();
+
     var opacity = 1;
 
     markers[visitor.ip] = marker;
+    popups[visitor.ip] = popup;
     var myInterval = setInterval(function() {
         opacity -= 0.05;
         marker.setOpacity(opacity);
@@ -44,6 +52,7 @@ function generateMarker(visitor) {
             map.removeLayer(marker);
             clearInterval(myInterval);
             delete markers[visitor.ip];
+            delete popups[visitor.ip];
         }
     }, 250);
 }
