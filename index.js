@@ -20,11 +20,11 @@ var davidShieldIcon = L.icon({
 // Generate endless amount of markers
 var i=0, markers = {};
 var markerTimer = setInterval(function () {
+	if (i > visitors.length)
+		i = 0;
     var visitor = visitors[i++];
     if (visitor)
-        generateMarker(visitor)
-    else
-        clearInterval(markerTimer);
+        generateMarker(visitor);
 },  200);
 
 function generateMarker(visitor) {
