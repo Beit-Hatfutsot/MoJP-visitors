@@ -6,6 +6,7 @@ L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   subdomains: ['a', 'b', 'c']
 }).addTo( map )
 
+
 var davidShieldIcon = L.icon({
     iconUrl: 'image/Pin.svg',
     shadowUrl: 'image/Shadow.svg',
@@ -29,12 +30,14 @@ var markerTimer = setInterval(function () {
 
 function generateMarker(visitor) {
 	// if the marker is already there, just make it brightest
+    var timeElm = document.getElementById('time');
+    var time = visitor.datetime.slice(12, 20);
+    timeElm.innerText = time;
     if (markers[visitor.ip]) {
         markers[visitor.ip].setOpacity(1);
 		popups[visitor.ip].setContent(visitor.city+': '+visitor.request);
         return;
     }
-
     var marker = L.marker([visitor.latitude, visitor.longitude], {icon: davidShieldIcon}).addTo(map);
 	var popup = L.popup({closeButton: false});
 	popup.setContent(visitor.city+': '+visitor.request);

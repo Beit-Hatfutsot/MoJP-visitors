@@ -7,9 +7,20 @@
         <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
         <![endif]-->
+        <style>
+            .leaflet-left { visibility: hidden; }
+            #time {font-weight: bold; font-size:20px;
+                    color: lightgreen; background-color: #333;
+                    border-radius: 5px;
+                    padding: 2px 8px;
+                    z-index: 99; position:absolute; top:30px; left: 30px;
+                    }
+        </style>
     </head>
     <body>
-        <div id="map"></div>
+        <div id="map">
+            <div id="time" style="">aaaaa</div>
+        </div>
         <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
         <script src="index.js"></script>
     </body>
